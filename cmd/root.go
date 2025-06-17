@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/CoffeeCat1920/Gochi/loader"
+	"github.com/CoffeeCat1920/Gochi/tui"
 	"github.com/spf13/cobra"
 )
 
@@ -18,9 +19,7 @@ var rootCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		for _, e := range entries {
-			fmt.Printf("Name: %s, Command:%s \n", e.Name, e.Exec)
-		}
+		tui.Run(entries)
 	},
 }
 
