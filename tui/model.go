@@ -2,6 +2,7 @@ package tui
 
 import (
 	"fmt"
+	"os/exec"
 	"strings"
 
 	"github.com/CoffeeCat1920/Gochi/loader"
@@ -9,17 +10,19 @@ import (
 )
 
 type model struct {
+	cursor  int
 	entries []loader.AppEntry
 }
 
 func newModel(entries []loader.AppEntry) *model {
 	return &model{
+		cursor:  0,
 		entries: entries,
 	}
 }
 
 func (m model) Init() tea.Cmd {
-	return nil
+	return tea.SetWindowTitle("Gochi")
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -28,23 +31,40 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch msg.String() {
 		case "ctrl+c", "q":
 			return m, tea.Quit
-		case "ctrl+z":
-			return m, tea.Suspend
+		case "up", "k":
+			if m.cursor > 0 {
+				m.cursor--
+			}
+		case "down", "j":
+			if m.cursor < len(m.entries)-1 {
+				m.cursor++
+			}
+		case "enter", " ":
+			cmdStr := strings.ReplaceAll(m.entries[m.cursor].Exec, "%u", "")
+			parts := strings.Fields(cmdStr)
+			cmd := exec.Command(parts[0], parts[1:]...)
+			err := cmd.Start()
+			if err != nil {
+				fmt.Println("Error launching app:", err)
+			}
+			return m, tea.Quit
+
 		}
 	}
 	return m, nil
 }
 
 func (m model) View() string {
-	for _, e := range m.entries {
-		fmt.Printf("Name: %s, Command:%s \n", e.Name, e.Exec)
+	var s strings.Builder
+
+	for i, entry := range m.entries {
+		cursor := " "
+		if m.cursor == i {
+			cursor = ">"
+		}
+
+		s.WriteString(fmt.Sprintf("%s %s\n", cursor, entry.Name))
 	}
 
-	var b strings.Builder
-
-	for _, e := range m.entries {
-		b.WriteString(fmt.Sprintf("Name: %s, Command: %s\n", e.Name, e.Exec))
-	}
-
-	return b.String()
+	return s.String()
 }
