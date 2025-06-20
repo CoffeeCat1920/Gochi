@@ -2,6 +2,7 @@ package loader
 
 import (
 	"errors"
+	"strings"
 
 	"github.com/go-ini/ini"
 )
@@ -16,6 +17,7 @@ func parseDesktopFile(path string) (*AppEntry, error) {
 
 	name := section.Key("Name").String()
 	exec := section.Key("Exec").String()
+	categories := strings.Split(section.Key("Categories").String(), ";")
 	icon := section.Key("Icon").String()
 
 	if name == "" || exec == "" {
@@ -23,8 +25,9 @@ func parseDesktopFile(path string) (*AppEntry, error) {
 	}
 
 	return &AppEntry{
-		Name: name,
-		Exec: exec,
-		Icon: icon,
+		Name:       name,
+		Exec:       exec,
+		Categories: categories,
+		Icon:       icon,
 	}, nil
 }

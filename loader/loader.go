@@ -9,9 +9,10 @@ import (
 )
 
 type AppEntry struct {
-	Name string
-	Exec string
-	Icon string
+	Name       string
+	Categories []string
+	Exec       string
+	Icon       string
 }
 
 func GetEntries() ([]AppEntry, error) {
