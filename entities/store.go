@@ -3,6 +3,7 @@ package entities
 import "github.com/sahilm/fuzzy"
 
 type AppStore struct {
+	Entries    []AppEntry
 	Names      []string
 	Categories []string
 	NameMap    map[string]string   // Name to Exec map
@@ -28,6 +29,7 @@ func NewAppStore(entries []AppEntry) *AppStore {
 	}
 
 	return &AppStore{
+		Entries:    entries,
 		Names:      names,
 		Categories: categories,
 		NameMap:    nameMap,

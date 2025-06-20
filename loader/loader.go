@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/afero"
 )
 
-func GetEntries() ([]entities.AppEntry, error) {
+func GetEntries() (*entities.AppStore, error) {
 	var entries []entities.AppEntry
 	fs := afero.NewOsFs()
 	path := "/usr/share/applications"
@@ -30,5 +30,7 @@ func GetEntries() ([]entities.AppEntry, error) {
 		}
 	}
 
-	return entries, nil
+	store := entities.NewAppStore(entries)
+
+	return store, nil
 }

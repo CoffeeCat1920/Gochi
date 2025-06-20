@@ -8,6 +8,7 @@ import (
 )
 
 type AppEntry struct {
+	Entries    []AppEntry
 	Name       string
 	Categories []string
 	Exec       string

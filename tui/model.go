@@ -14,10 +14,10 @@ type model struct {
 	entries []entities.AppEntry
 }
 
-func newModel(entries []entities.AppEntry) *model {
+func newModel(store entities.AppStore) *model {
 	return &model{
 		cursor:  0,
-		entries: entries,
+		entries: store.Entries,
 	}
 }
 
