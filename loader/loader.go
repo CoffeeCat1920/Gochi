@@ -5,18 +5,12 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/CoffeeCat1920/Gochi/entities"
 	"github.com/spf13/afero"
 )
 
-type AppEntry struct {
-	Name       string
-	Categories []string
-	Exec       string
-	Icon       string
-}
-
-func GetEntries() ([]AppEntry, error) {
-	var entries []AppEntry
+func GetEntries() ([]entities.AppEntry, error) {
+	var entries []entities.AppEntry
 	fs := afero.NewOsFs()
 	path := "/usr/share/applications"
 
@@ -28,7 +22,7 @@ func GetEntries() ([]AppEntry, error) {
 
 	for _, f := range files {
 		if filepath.Ext(f.Name()) == ".desktop" {
-			entry, err := parseDesktopFile(filepath.Join(path, f.Name()))
+			entry, err := entities.NewAppEntry(filepath.Join(path, f.Name()))
 			if err != nil {
 				continue
 			}

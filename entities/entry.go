@@ -1,4 +1,4 @@
-package loader
+package entities
 
 import (
 	"errors"
@@ -7,7 +7,13 @@ import (
 	"github.com/go-ini/ini"
 )
 
-func parseDesktopFile(path string) (*AppEntry, error) {
+type AppEntry struct {
+	Name       string
+	Categories []string
+	Exec       string
+}
+
+func NewAppEntry(path string) (*AppEntry, error) {
 	cfg, err := ini.Load(path)
 	if err != nil {
 		return nil, err
@@ -18,7 +24,8 @@ func parseDesktopFile(path string) (*AppEntry, error) {
 	name := section.Key("Name").String()
 	exec := section.Key("Exec").String()
 	categories := strings.Split(section.Key("Categories").String(), ";")
-	icon := section.Key("Icon").String()
+
+	categories = append(categories, name)
 
 	if name == "" || exec == "" {
 		return nil, errors.New("invalid .desktop entry: missing name or exec")
@@ -26,8 +33,7 @@ func parseDesktopFile(path string) (*AppEntry, error) {
 
 	return &AppEntry{
 		Name:       name,
-		Exec:       exec,
 		Categories: categories,
-		Icon:       icon,
+		Exec:       exec,
 	}, nil
 }

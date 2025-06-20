@@ -5,16 +5,16 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/CoffeeCat1920/Gochi/loader"
+	"github.com/CoffeeCat1920/Gochi/entities"
 	tea "github.com/charmbracelet/bubbletea"
 )
 
 type model struct {
 	cursor  int
-	entries []loader.AppEntry
+	entries []entities.AppEntry
 }
 
-func newModel(entries []loader.AppEntry) *model {
+func newModel(entries []entities.AppEntry) *model {
 	return &model{
 		cursor:  0,
 		entries: entries,
