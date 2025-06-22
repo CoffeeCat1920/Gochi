@@ -1,6 +1,6 @@
 package main
 
-import "github.com/spf13/myapp/cmd"
+import "tui/cmd"
 
 func main() {
 	cmd.Execute()
