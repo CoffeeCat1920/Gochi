@@ -1,6 +1,6 @@
 package main
 
-import "github.com/CoffeeCat1920/Gochi/cmd"
+import "github.com/spf13/myapp/cmd"
 
 func main() {
 	cmd.Execute()
