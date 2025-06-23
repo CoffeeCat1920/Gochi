@@ -25,7 +25,7 @@ type Process struct {
 }
 
 var (
-	connStr string = "/temp/mochi.sock"
+	connStr string = "/tmp/mochi.sock"
 	process *Process
 )
 

@@ -28,6 +28,8 @@ func (process *Process) handler(conn net.Conn) (err error) {
 		return
 	}
 
+	fmt.Print(req)
+
 	switch req.Verb {
 	case "list":
 		names := process.store.Names()
@@ -51,6 +53,12 @@ func (process *Process) Run() error {
 	if err := os.RemoveAll(process.connStr); err != nil {
 		return fmt.Errorf("could not remove existing socket: %w", err)
 	}
+
+	listener, err := net.Listen("unix", process.connStr)
+	if err != nil {
+		return fmt.Errorf("failed to listen on socket: %w", err)
+	}
+	process.listner = listener
 
 	signal.Notify(process.quitChan, syscall.SIGINT, syscall.SIGTERM)
 	go func() {
