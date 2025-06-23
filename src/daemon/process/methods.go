@@ -40,7 +40,8 @@ func (process *Process) handler(conn net.Conn) (err error) {
 			err = encoder.Encode(Response{Status: "ok"})
 		}
 	default:
-		err = encoder.Encode(Response{Status: "error", Error: "unknown action"})
+		err = encoder.Encode(Response{Status: "error", Error: fmt.Sprintf("unknown action, %s", req.Verb)})
+		fmt.Print(req.Verb)
 	}
 
 	return
