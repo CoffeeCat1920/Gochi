@@ -1,7 +1,16 @@
 # Gochi
-A simple cli application laucher in golang that provide lightning fast performance using deamon. 
-# Work in progress.
-The tool is currently work in progress. You can lend a hand if you want.  
-- [X] Make the Daemon
-- [X] Application opening using daemon. 
-- [-] Making the front-end cli app.
+A simple CLI application launcher written in Go that provides lightning-fast performance using a daemon.
+
+> ⚠️ **Work in Progress**  
+> The tool is still under development. Contributions are welcome!
+
+## ✅ Features & Progress
+
+- [x] **Daemon Engine** – Background process to handle app launching.
+- [x] **App Launching via Daemon** – Send app requests to the daemon and execute them.
+- [ ] **CLI helper** - Help lauch both daemon and run the front-end in different mods.
+- [ ] **CLI Frontend** – User-friendly command line interface to interact with the daemon:
+  - [ ] `gochi open` – Launch apps easily.
+  - [ ] Error handling & UX improvements.
+
+---
